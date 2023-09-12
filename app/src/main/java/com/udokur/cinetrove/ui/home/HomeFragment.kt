@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.udokur.cinetrove.R
 import com.udokur.cinetrove.databinding.FragmentHomeBinding
 
 
@@ -16,10 +15,10 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<HomeViewModel>() //ViewModel tanımlama
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -30,24 +29,30 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeEvent() {
-         viewModel.errorMessage.observe(viewLifecycleOwner){ error ->
-             binding.textViewHomeError.text = error
-             binding.textViewHomeError.isVisible = true
-         }
-        viewModel.isLoading.observe(viewLifecycleOwner){ loading ->
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            binding.textViewHomeError.text = error
+            binding.textViewHomeError.isVisible = true
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             binding.progressBar.isVisible = loading
         }
-        viewModel.movieList.observe(viewLifecycleOwner){ list->
-            println(list)
+        viewModel.movieList.observe(viewLifecycleOwner) { list ->
+            if (list.isNullOrEmpty()) {
+                binding.textViewHomeError.text = "Film yok :("
+                binding.textViewHomeError.isVisible = true
 
 
+            } else {
+                movieAdapter = MovieAdapter(list)
+                binding.homeRecyclerView.adapter = movieAdapter
+
+            }
+        }
+
+        fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
-
 
