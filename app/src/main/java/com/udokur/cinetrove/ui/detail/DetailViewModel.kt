@@ -1,32 +1,31 @@
-package com.udokur.cinetrove.ui.home
+package com.example.tmdbmovieapp.ui.detail
 
+import android.provider.SyncStateContract
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.udokur.cinetrove.model.MovieItem
+import com.udokur.cinetrove.model.MovieDetailResponse
 import com.udokur.cinetrove.network.ApiClient
-import com.udokur.cinetrove.util.Constant
 import kotlinx.coroutines.launch
+import java.lang.Exception
+import com.udokur.cinetrove.util.Constant
 
-class HomeViewModel : ViewModel() {
 
-    val movieList: MutableLiveData<List<MovieItem?>?> = MutableLiveData()
+class DetailViewModel : ViewModel() {
+
+    val movieResponse: MutableLiveData<MovieDetailResponse> = MutableLiveData()
     val isLoading = MutableLiveData(false)
     val errorMessage: MutableLiveData<String?> = MutableLiveData()
 
-    init {
-        getMovieList()
-    }
-
-    fun getMovieList() {
+    fun getMovieDetail(movieId: Int) {
         isLoading.value = true
 
         viewModelScope.launch {
             try {
-                val response = ApiClient.getClient().getMovieList(token = Constant.BEARER_TOKEN)
+                val response = ApiClient.getClient().getMovieDetail(movieId = movieId.toString(),language ="tr-TR", token = Constant.BEARER_TOKEN)
 
                 if (response.isSuccessful) {
-                    movieList.postValue(response.body()?.movieItems)
+                    movieResponse.postValue(response.body())
                 } else {
                     if (response.message().isNullOrEmpty()) {
                         errorMessage.value = "An unknown error occured"

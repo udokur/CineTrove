@@ -78,6 +78,12 @@ dependencies {
     // Glide
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
+    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.3.1")
+
+
+
+
+
 
 
 

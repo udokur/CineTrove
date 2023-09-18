@@ -1,18 +1,34 @@
 package com.udokur.cinetrove.network
 
+import com.udokur.cinetrove.model.MovieDetailResponse
 import com.udokur.cinetrove.model.MovieResponse
-import com.udokur.cinetrove.util.Constant
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("popular")
-    suspend fun getMovieList(@Header("Authorization") token: String): Response<MovieResponse>
+    suspend fun getMovieList(
+        @Header("Authorization") token: String,
 
+        ): Response<MovieResponse>
+
+    @GET("{movieId}")
+    suspend fun getMovieDetail(
+        @Path("movieId") movieId: String,
+        @Header("Authorization") token: String,
+        @Query("language") language: String // Dil parametresini ekleyin
+    ): Response<MovieDetailResponse>
 
 }
+
+
+
+
+
+
+
 

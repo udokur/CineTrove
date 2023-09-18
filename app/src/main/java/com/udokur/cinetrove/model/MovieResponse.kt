@@ -7,5 +7,11 @@ data class MovieResponse(
 
     @SerializedName("results")
     val movieItems: List<MovieItem?>?,
+    @SerializedName("page")
+    val page: Int?,
+    @SerializedName("total_results")
+    val totalResults: Int?
+
+
 
     )

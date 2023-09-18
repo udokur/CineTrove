@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.udokur.cinetrove.databinding.FragmentHomeBinding
 
 
@@ -14,7 +15,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<HomeViewModel>() //ViewModel tanımlama
+    private val viewModel by viewModels<HomeViewModel>()
     private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreateView(
@@ -22,13 +23,12 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        viewModel.getMovieList()
-        observeEvent()
+        observeEvents()
 
         return binding.root
     }
 
-    private fun observeEvent() {
+    private fun observeEvents() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             binding.textViewHomeError.text = error
             binding.textViewHomeError.isVisible = true
@@ -38,21 +38,24 @@ class HomeFragment : Fragment() {
         }
         viewModel.movieList.observe(viewLifecycleOwner) { list ->
             if (list.isNullOrEmpty()) {
-                binding.textViewHomeError.text = "Film yok :("
+                binding.textViewHomeError.text = "There is any movie :("
                 binding.textViewHomeError.isVisible = true
-
-
             } else {
-                movieAdapter = MovieAdapter(list)
+                movieAdapter = MovieAdapter(list, object : MovieClickListener {
+                    override fun onMovieClicked(movieId: Int?) {
+                        movieId?.let {
+                            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+                            findNavController().navigate(action)
+                        }
+                    }
+                })
                 binding.homeRecyclerView.adapter = movieAdapter
-
             }
         }
+    }
 
-        fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
-
