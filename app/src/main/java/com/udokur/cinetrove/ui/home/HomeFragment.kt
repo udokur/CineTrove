@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.udokur.cinetrove.databinding.FragmentHomeBinding
-
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -24,6 +25,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         observeEvents()
+        setupScrollListener() // Kaydırma olayını dinlemek için
 
         return binding.root
     }
@@ -57,5 +59,21 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupScrollListener() {
+        binding.homeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                if (!viewModel.isLoading.value!! && visibleItemCount + firstVisibleItem >= totalItemCount && firstVisibleItem >= 0) {
+                    // Sayfa sonuna gelindi, daha fazla veri yükle
+                    viewModel.loadMoreMovies()
+                }
+            }
+        })
     }
 }

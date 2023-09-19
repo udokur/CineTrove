@@ -7,42 +7,43 @@ import com.udokur.cinetrove.databinding.ItemHomeRecyclerViewBinding
 import com.udokur.cinetrove.model.MovieItem
 import com.udokur.cinetrove.util.loadImage
 
-
-interface MovieClickListener{
-    fun onMovieClicked(movieId:Int?)
+interface MovieClickListener {
+    fun onMovieClicked(movieId: Int?)
 }
 
-class MovieAdapter(private val movieList: List<MovieItem?>,private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHoldler>() {
+class MovieAdapter(private val movieList: List<MovieItem?>, private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    class ViewHoldler(val binding: ItemHomeRecyclerViewBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemHomeRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHoldler {
-        return ViewHoldler(
-            ItemHomeRecyclerViewBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemHomeRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
+
     override fun getItemCount(): Int {
-        return movieList.size
+        return movieList.size / 2 // İkişerli olarak sıralandığı için liste uzunluğunu yarıya düşürüyoruz.
     }
 
-    override fun onBindViewHolder(holder: ViewHoldler, position: Int) {
-        val movie = movieList[position]
-        holder.binding.textViewTitle.text = movie?.title
-        holder.binding.textViewVote.text = movie?.voteAverage.toString()
-        holder.binding.imageViewMovie.loadImage(movie?.posterPath)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val movie1 = movieList[position * 2] // Listenin çift indexli elemanı
+        val movie2 = movieList[position * 2 + 1] // Listenin çift indexli elemanının bir sonraki elemanı
 
+        holder.binding.textViewTitle1.text = movie1?.title
+        holder.binding.textViewVote1.text = movie1?.voteAverage.toString()
+        holder.binding.imageViewMovie1.loadImage(movie1?.posterPath)
 
-        holder.binding.root.setOnClickListener{
-            movieClickListener.onMovieClicked(movieId = movie?.id)
-
+        // İlk öğe için tıklama işlevi
+        holder.binding.root.setOnClickListener {
+            movieClickListener.onMovieClicked(movieId = movie1?.id)
         }
 
+        // İkinci öğe için tıklama işlevi
+        holder.binding.root2.setOnClickListener {
+            movieClickListener.onMovieClicked(movieId = movie2?.id)
+        }
 
-
-
+        holder.binding.textViewTitle2.text = movie2?.title
+        holder.binding.textViewVote2.text = movie2?.voteAverage.toString()
+        holder.binding.imageViewMovie2.loadImage(movie2?.posterPath)
     }
 }

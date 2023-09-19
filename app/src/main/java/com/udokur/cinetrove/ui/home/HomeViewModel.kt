@@ -10,23 +10,39 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
+
+
     val movieList: MutableLiveData<List<MovieItem?>?> = MutableLiveData()
     val isLoading = MutableLiveData(false)
     val errorMessage: MutableLiveData<String?> = MutableLiveData()
 
+    private var currentPage = 1 // Şu anki sayfa numarası
+    private val pageSize = 20 // Sayfa boyutu
+
     init {
-        getMovieList()
+        getMovieList(currentPage)
     }
 
-    fun getMovieList() {
+    fun loadMoreMovies() {
+        currentPage++
+        getMovieList(currentPage)
+    }
+
+    fun getMovieList(page: Int) {
         isLoading.value = true
 
         viewModelScope.launch {
             try {
-                val response = ApiClient.getClient().getMovieList(token = Constant.BEARER_TOKEN)
+                val response = ApiClient.getClient().getMovieList(
+                    token = Constant.BEARER_TOKEN,
+                    page = page,
+                    pageSize = pageSize
+                )
 
                 if (response.isSuccessful) {
-                    movieList.postValue(response.body()?.movieItems)
+                    val currentList = movieList.value ?: emptyList()
+                    val newList = response.body()?.movieItems ?: emptyList()
+                    movieList.postValue(currentList + newList)
                 } else {
                     if (response.message().isNullOrEmpty()) {
                         errorMessage.value = "An unknown error occured"

@@ -13,22 +13,22 @@ interface ApiService {
     @GET("popular")
     suspend fun getMovieList(
         @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int
+    ): Response<MovieResponse>
 
-        ): Response<MovieResponse>
 
     @GET("{movieId}")
     suspend fun getMovieDetail(
         @Path("movieId") movieId: String,
         @Header("Authorization") token: String,
-        @Query("language") language: String // Dil parametresini ekleyin
+        @Query("language") language: String
     ): Response<MovieDetailResponse>
 
+    @GET("search")
+    suspend fun searchMovies(
+        @Header("Authorization") token: String,
+        @Query("query") query: String
+    ): Response<MovieResponse>
+
 }
-
-
-
-
-
-
-
-

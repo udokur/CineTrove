@@ -28,7 +28,7 @@ class DetailViewModel : ViewModel() {
                     movieResponse.postValue(response.body())
                 } else {
                     if (response.message().isNullOrEmpty()) {
-                        errorMessage.value = "An unknown error occured"
+                        errorMessage.value = "Bilinmeyen Bir Hata !!"
                     } else {
                         errorMessage.value = response.message()
                     }
