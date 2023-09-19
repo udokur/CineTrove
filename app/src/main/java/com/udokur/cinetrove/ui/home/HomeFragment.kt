@@ -40,18 +40,23 @@ class HomeFragment : Fragment() {
         }
         viewModel.movieList.observe(viewLifecycleOwner) { list ->
             if (list.isNullOrEmpty()) {
-                binding.textViewHomeError.text = "There is any movie :("
+                binding.textViewHomeError.text = "Film Bulunamadı :("
                 binding.textViewHomeError.isVisible = true
             } else {
-                movieAdapter = MovieAdapter(list, object : MovieClickListener {
-                    override fun onMovieClicked(movieId: Int?) {
-                        movieId?.let {
-                            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
-                            findNavController().navigate(action)
+                if (!::movieAdapter.isInitialized) {
+                    movieAdapter = MovieAdapter(list, object : MovieClickListener {
+                        override fun onMovieClicked(movieId: Int?) {
+                            movieId?.let {
+                                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+                                findNavController().navigate(action)
+                            }
                         }
-                    }
-                })
-                binding.homeRecyclerView.adapter = movieAdapter
+                    })
+                    binding.homeRecyclerView.adapter = movieAdapter
+                } else {
+                    // Mevcut adapter varsa, yeni filmleri ekleyin
+                    movieAdapter.addMovies(list)
+                }
             }
         }
     }

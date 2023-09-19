@@ -28,6 +28,14 @@ class HomeViewModel : ViewModel() {
         getMovieList(currentPage)
     }
 
+    fun clearMovieList() {
+        movieList.value = emptyList()
+    }
+
+
+
+
+
     fun getMovieList(page: Int) {
         isLoading.value = true
 
