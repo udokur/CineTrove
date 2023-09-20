@@ -12,13 +12,17 @@ interface MovieClickListener {
 }
 
 
+class MovieAdapter(
+    private var movieList: List<MovieItem?>,
+    private val movieClickListener: MovieClickListener
+) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-class MovieAdapter(private var movieList: List<MovieItem?>, private val movieClickListener: MovieClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
-
-    inner class ViewHolder(val binding: ItemHomeRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: ItemHomeRecyclerViewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemHomeRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemHomeRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -35,7 +39,8 @@ class MovieAdapter(private var movieList: List<MovieItem?>, private val movieCli
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie1 = movieList[position * 2] // Listenin çift indexli elemanı
-        val movie2 = movieList[position * 2 + 1] // Listenin çift indexli elemanının bir sonraki elemanı
+        val movie2 =
+            movieList[position * 2 + 1] // Listenin çift indexli elemanının bir sonraki elemanı
 
         holder.binding.textViewTitle1.text = movie1?.title
         holder.binding.textViewVote1.text = movie1?.voteAverage.toString()

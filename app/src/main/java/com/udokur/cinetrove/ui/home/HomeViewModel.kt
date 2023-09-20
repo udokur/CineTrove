@@ -32,10 +32,6 @@ class HomeViewModel : ViewModel() {
         movieList.value = emptyList()
     }
 
-
-
-
-
     fun getMovieList(page: Int) {
         isLoading.value = true
 
