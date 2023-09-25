@@ -2,6 +2,8 @@ package com.udokur.cinetrove
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
+import android.widget.EditText
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -13,9 +15,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
+    private lateinit var editText: EditText
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
+
+
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController)
     }
+
+
 
 
     override fun onSupportNavigateUp(): Boolean {

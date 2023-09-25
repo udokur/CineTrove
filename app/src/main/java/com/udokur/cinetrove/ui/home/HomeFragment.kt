@@ -1,21 +1,27 @@
 package com.udokur.cinetrove.ui.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.udokur.cinetrove.R
 import com.udokur.cinetrove.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+
+
+
+class HomeFragment : Fragment(), MovieClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var movieAdapter: MovieAdapter
 
@@ -24,11 +30,16 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
         observeEvents()
-        setupScrollListener() // Kaydırma olayını dinlemek için
+        setupSearchView()
+
+        setupScrollListener()
 
         return binding.root
     }
+
+    private var lastVisibleItemPosition = 0
 
     private fun observeEvents() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
@@ -40,30 +51,38 @@ class HomeFragment : Fragment() {
         }
         viewModel.movieList.observe(viewLifecycleOwner) { list ->
             if (list.isNullOrEmpty()) {
-                binding.textViewHomeError.text = "Film Bulunamadı :("
+                binding.textViewHomeError.text = ""
                 binding.textViewHomeError.isVisible = true
             } else {
-                if (!::movieAdapter.isInitialized) {
-                    movieAdapter = MovieAdapter(list, object : MovieClickListener {
-                        override fun onMovieClicked(movieId: Int?) {
-                            movieId?.let {
-                                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
-                                findNavController().navigate(action)
-                            }
-                        }
-                    })
-                    binding.homeRecyclerView.adapter = movieAdapter
-                } else {
-                    // Mevcut adapter varsa, yeni filmleri ekleyin
-                    movieAdapter.addMovies(list)
-                }
+                movieAdapter = MovieAdapter(list, this)
+                binding.homeRecyclerView.adapter = movieAdapter
+                binding.homeRecyclerView.scrollToPosition(lastVisibleItemPosition)
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setupSearchView() {
+        activity?.findViewById<EditText>(R.id.editTextSearch)
+            ?.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    val query = s.toString()
+                    if (query.length >= 3) {
+                        viewModel.searchMovies(query)
+                    } else {
+                        viewModel.clearMovieList()
+                    }
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
     }
 
     private fun setupScrollListener() {
@@ -74,11 +93,24 @@ class HomeFragment : Fragment() {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
+                lastVisibleItemPosition = firstVisibleItem
+
                 if (!viewModel.isLoading.value!! && visibleItemCount + firstVisibleItem >= totalItemCount && firstVisibleItem >= 0) {
-                    // Sayfa sonuna gelindi, daha fazla veri yükle
                     viewModel.loadMoreMovies()
                 }
             }
         })
     }
-}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onMovieClicked(movieId: Int?) {
+
+        movieId?.let {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+            findNavController().navigate(action)
+        }
+    }}
