@@ -12,6 +12,8 @@
         android:layout_height="match_parent" />
 
 
+
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/movieDetailGroup"
         android:layout_width="wrap_content"

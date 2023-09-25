@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.tmdbmovieapp.ui.detail.DetailViewModel
 import com.udokur.cinetrove.MainActivity
-import com.udokur.cinetrove.R
 import com.udokur.cinetrove.databinding.FragmentDetailBinding
 import com.udokur.cinetrove.util.loadImage
 

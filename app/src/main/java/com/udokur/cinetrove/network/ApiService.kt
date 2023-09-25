@@ -2,6 +2,7 @@ package com.udokur.cinetrove.network
 
 import com.udokur.cinetrove.model.MovieDetailResponse
 import com.udokur.cinetrove.model.MovieResponse
+import com.udokur.cinetrove.model.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -25,10 +26,10 @@ interface ApiService {
         @Query("language") language: String
     ): Response<MovieDetailResponse>
 
-    @GET("search")
+    @GET("search/movie")
     suspend fun searchMovies(
         @Header("Authorization") token: String,
         @Query("query") query: String
-    ): Response<MovieResponse>
+    ): Response<SearchResponse>
 
 }

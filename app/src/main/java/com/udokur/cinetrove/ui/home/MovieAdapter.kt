@@ -7,15 +7,19 @@ import com.udokur.cinetrove.databinding.ItemHomeRecyclerViewBinding
 import com.udokur.cinetrove.model.MovieItem
 import com.udokur.cinetrove.util.loadImage
 
+
 interface MovieClickListener {
     fun onMovieClicked(movieId: Int?)
+
 }
 
 
 class MovieAdapter(
     private var movieList: List<MovieItem?>,
     private val movieClickListener: MovieClickListener
-) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+        ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+
+
 
     inner class ViewHolder(val binding: ItemHomeRecyclerViewBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -26,12 +30,6 @@ class MovieAdapter(
         return ViewHolder(binding)
     }
 
-    fun addMovies(newMovies: List<MovieItem?>) {
-        val currentList = ArrayList(movieList)
-        currentList.addAll(newMovies)
-        movieList = currentList
-        notifyDataSetChanged()
-    }
 
     override fun getItemCount(): Int {
         return movieList.size / 2 // İkişerli olarak sıralandığı için liste uzunluğunu yarıya düşürüyoruz.

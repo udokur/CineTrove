@@ -21,15 +21,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
         navController = navHostFragment.findNavController()
+
+        setupActionBarWithNavController(navController)
 
         setupActionBarWithNavController(navController)
     }
 
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
 }

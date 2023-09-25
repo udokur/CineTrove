@@ -82,6 +82,8 @@ dependencies {
 
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
+    implementation ("androidx.appcompat:appcompat:1.3.1")
+
 
 
 

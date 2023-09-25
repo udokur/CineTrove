@@ -22,4 +22,19 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create()).client(client).build()
             .create(ApiService::class.java)
     }
+
+    fun getClient2(): ApiService {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val client: OkHttpClient =
+            OkHttpClient.Builder().addInterceptor(interceptor).connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS).build()
+
+
+        return Retrofit.Builder().baseUrl(Constant.SEARCH_URL)
+            .addConverterFactory(GsonConverterFactory.create()).client(client).build()
+            .create(ApiService::class.java)
+    }
+
 }
