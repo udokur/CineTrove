@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
-    private lateinit var editText: EditText
 
 
 
@@ -23,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
-
 
 
         super.onCreate(savedInstanceState)

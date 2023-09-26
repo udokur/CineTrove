@@ -6,103 +6,161 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-
+    <!-- İlk Öğe -->
     <LinearLayout
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewMovie1"
-            android:layout_width="180dp"
-            android:layout_height="230dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_launcher_background" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
-        <TextView
-            android:id="@+id/textViewTitle1"
+            <ImageView
+                android:id="@+id/imageViewMovie1"
+                android:layout_width="180dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:ellipsize="end"
-
-            android:maxLines="2"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="Sample Movie" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageViewVote1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_star" />
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#D0D0D0"
+            app:cardElevation="4dp">
 
             <TextView
-                android:id="@+id/textViewVote1"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewTitle1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                tools:text="8.0" />
-        </LinearLayout>
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Sample Movie" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#E8E8E8"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewVote1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_star" />
+
+                <TextView
+                    android:id="@+id/textViewVote1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    tools:text="8.0" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
+    <!-- İkinci Öğe -->
     <LinearLayout
         android:id="@+id/root2"
-
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="8dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewMovie2"
-            android:layout_width="180dp"
-            android:layout_gravity="center"
-            android:layout_height="230dp"
-            app:srcCompat="@drawable/audiooff" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
-        <TextView
-            android:id="@+id/textViewTitle2"
+            <ImageView
+                android:id="@+id/imageViewMovie2"
+                android:layout_width="180dp"
+                android:layout_gravity="center"
+                android:layout_height="230dp"
+                app:srcCompat="@drawable/audiooff" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="Sample Movie" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageViewVote2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/ic_star" />
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="#D0D0D0"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
 
             <TextView
-                android:id="@+id/textViewVote2"
-                android:layout_width="wrap_content"
+                android:id="@+id/textViewTitle2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                tools:text="8.0" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Sample Movie" />
 
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#E8E8E8"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageViewVote2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_star" />
+
+                <TextView
+                    android:id="@+id/textViewVote2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    tools:text="8.0" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 </LinearLayout>

@@ -11,5 +11,7 @@ data class Results(
     val posterPath: String?,
     @SerializedName("title")
     val title: String?,
+    @SerializedName("vote_average")
+    val voteAverage: Double?,
 
 )

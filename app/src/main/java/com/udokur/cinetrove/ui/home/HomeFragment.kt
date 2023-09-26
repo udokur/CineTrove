@@ -24,6 +24,8 @@ class HomeFragment : Fragment(), MovieClickListener {
     private val binding get() = _binding!!
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var movieAdapter: MovieAdapter
+    private var currentPage = 1
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -70,6 +72,7 @@ class HomeFragment : Fragment(), MovieClickListener {
                         viewModel.searchMovies(query)
                     } else {
                         viewModel.clearMovieList()
+                        viewModel.getMovieList(currentPage)
                     }
                 }
 

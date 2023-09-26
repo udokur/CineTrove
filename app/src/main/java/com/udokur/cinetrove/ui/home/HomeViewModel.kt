@@ -43,7 +43,7 @@ class HomeViewModel : ViewModel() {
                             id = result?.id ?: 0,
                             posterPath = result?.posterPath,
                             title = result?.title,
-                            voteAverage = null
+                            voteAverage = result?.voteAverage
 
                         )
                     } ?: emptyList()
