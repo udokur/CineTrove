@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.DetailFragment">
 
+
+
+
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerDetail"
         android:layout_width="match_parent"
@@ -21,6 +26,8 @@
         android:visibility="gone"
         app:constraint_referenced_ids="imageViewDetail"
         tools:visibility="visible" />
+
+
 
     <ImageView
         android:id="@+id/imageViewDetail"

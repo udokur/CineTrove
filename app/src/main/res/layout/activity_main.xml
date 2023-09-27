@@ -8,27 +8,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Film Ara..."
-
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         android:layout_margin="16dp"/>
 
 
-    <!-- RecyclerView için Container (FragmentContainerView) -->
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,5 @@
 package com.udokur.cinetrove.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +18,6 @@ class HomeViewModel : ViewModel() {
     private var currentPage = 1
     private val pageSize = 20
 
-    private val _searchResult = MutableLiveData<List<MovieItem>>()
 
 
     init {

@@ -32,24 +32,24 @@ class MovieAdapter(
 
 
     override fun getItemCount(): Int {
-        return movieList.size / 2 // İkişerli olarak sıralandığı için liste uzunluğunu yarıya düşürüyoruz.
+        return movieList.size / 2
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movie1 = movieList[position * 2] // Listenin çift indexli elemanı
+        val movie1 = movieList[position * 2]
         val movie2 =
-            movieList[position * 2 + 1] // Listenin çift indexli elemanının bir sonraki elemanı
+            movieList[position * 2 + 1]
 
         holder.binding.textViewTitle1.text = movie1?.title
         holder.binding.textViewVote1.text = movie1?.voteAverage.toString()
         holder.binding.imageViewMovie1.loadImage(movie1?.posterPath)
 
-        // İlk öğe için tıklama işlevi
+
         holder.binding.root.setOnClickListener {
             movieClickListener.onMovieClicked(movieId = movie1?.id)
         }
 
-        // İkinci öğe için tıklama işlevi
+
         holder.binding.root2.setOnClickListener {
             movieClickListener.onMovieClicked(movieId = movie2?.id)
         }
